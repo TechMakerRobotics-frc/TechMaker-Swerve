@@ -5,10 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
 import swervelib.parser.PIDFConfig;
-
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean constants. This
  * class should not be used for any other purpose. All constants should be declared globally (i.e. public static). Do
@@ -35,8 +37,19 @@ public final class Constants
         public static final double MAX_ACCELERATION = 2;
     }
 
-    public static final class Drivebase
+    public static final class DriveConstants
     {
+        public static final double kTrackWidth = 0.60;
+        // Distance between centers of right and left wheels on robot
+        public static final double kWheelBase = 0.60;
+        // Distance between front and back wheels on robot
+        public static final SwerveDriveKinematics kDriveKinematics =
+        new SwerveDriveKinematics(
+            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+            new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
+            new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+        public static final double kMaxSpeedMetersPerSecond = 1;
 
         // Hold time on motor brakes when disabled
         public static final double WHEEL_LOCK_TIME = 10; // seconds
@@ -51,4 +64,19 @@ public final class Constants
 
         public static final int DRIVER_CONTROLLER_PORT = 0;
     }
+    public static final class AutoConstants {
+        public static final double kMaxSpeedMetersPerSecond = 1;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
+        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI/2;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI/2;
+    
+        public static final double kPXController = 1;
+        public static final double kPYController = 1;
+        public static final double kPThetaController = 1;
+    
+        // Constraint for the motion profiled robot angle controller
+        public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+            new TrapezoidProfile.Constraints(
+                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+      }
 }

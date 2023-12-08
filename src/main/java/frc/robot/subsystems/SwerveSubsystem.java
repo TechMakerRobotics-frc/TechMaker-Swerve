@@ -9,10 +9,12 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.swerve.TeleopDrive;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -24,7 +26,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
     //swerve drive object
     private final SwerveDrive swerveDrive;
-    private SwerveAutoBuilder autoBuilder = null;
 
     public SwerveSubsystem(File directory){
         SwerveDriveTelemetry.verbosity = SwerveDriveTelemetry.TelemetryVerbosity.HIGH;
@@ -88,7 +89,10 @@ public class SwerveSubsystem extends SubsystemBase {
         yInput = Math.pow(yInput, 3);
         return swerveDrive.swerveController.getTargetSpeeds(xInput, yInput, angle.getRadians(), getHeading().getRadians());
     }
-
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
+        swerveDrive.setModuleStates(desiredStates, false);
+     
+      }
     public ChassisSpeeds getFieldVelocity(){
         return swerveDrive.getFieldVelocity();
     }

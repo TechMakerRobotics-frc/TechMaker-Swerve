@@ -7,19 +7,28 @@ package frc.robot;
 
 import java.io.File;
 
+
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.swerve.AbsoluteDrive;
 import frc.robot.commands.swerve.TeleopDrive;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import lib.choreolib.ChoreoSwerveControllerCommand;
+import lib.choreolib.ChoreoTrajectory;
+import lib.choreolib.TrajectoryManager;
 
 
 /**
@@ -38,6 +47,8 @@ public class RobotContainer
     // Replace with CommandPS4Controller or CommandJoystick if needed
     CommandXboxController driverXbox = new CommandXboxController(0);
 
+    Field2d m_field = new Field2d();
+    ChoreoTrajectory traj;
 
     AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
             // Applies deadbands and inverts controls because joysticks
@@ -65,12 +76,21 @@ public class RobotContainer
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
+        TrajectoryManager.getInstance().LoadTrajectories();
+        traj = TrajectoryManager.getInstance().getTrajectory("New Path.json");
+        m_field.getObject("traj").setPoses(
+            traj.getInitialPose(), traj.getFinalPose()
+        );
+        m_field.getObject("trajPoses").setPoses(
+            traj.getPoses()
+        );
+        SmartDashboard.putData(m_field);
         // Configure the trigger bindings
         configureBindings();
 
 
 
-        drivebase.setDefaultCommand(closedTeleopDrive);
+        drivebase.setDefaultCommand(closedAbsoluteDrive);
     }
     
     
@@ -105,7 +125,38 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        // An example command will be run in autonomous
-        return Autos.exampleAuto(exampleSubsystem);
+        var thetaController =
+        new PIDController(
+            AutoConstants.kPThetaController, 0, 0);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    ChoreoSwerveControllerCommand swerveControllerCommand =
+        new ChoreoSwerveControllerCommand(
+            TrajectoryManager.getInstance().getTrajectory("retocurva.json"),
+            drivebase::getPose, // Functional interface to feed supplier
+            DriveConstants.kDriveKinematics,
+
+            // Position controllers
+            new PIDController(AutoConstants.kPXController, 0, 0),
+            new PIDController(AutoConstants.kPYController, 0, 0),
+            thetaController,
+            drivebase::setModuleStates,
+            true,
+            drivebase);
+
+    // Reset odometry to the starting pose of the trajectory.
+    drivebase.resetOdometry(traj.getInitialPose());
+
+    // Run path following command, then stop at the end.
+    return Commands.sequence(
+        Commands.runOnce(()->drivebase.resetOdometry(traj.getInitialPose())),
+        swerveControllerCommand,
+        Commands.runOnce(() -> drivebase.lock())
+    );
     }
+    
+  public void periodic() {
+        m_field.setRobotPose(drivebase.getPose());
+      }
+    
 }
