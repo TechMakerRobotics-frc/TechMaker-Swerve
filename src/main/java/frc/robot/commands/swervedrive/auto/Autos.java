@@ -49,23 +49,15 @@ public final class Autos
    */
   public static CommandBase exampleAuto(SwerveSubsystem swerve)
   {
-    boolean               onTheFly = false; // Use the path defined in code or loaded from PathPlanner.
+    boolean               onTheFly = true; // Use the path defined in code or loaded from PathPlanner.
     PathPlannerTrajectory example;
     if (onTheFly)
     {
-      // Simple path with holonomic rotation. Stationary start/end. Max velocity of 4 m/s and max accel of 3 m/s^2
-      example = PathPlanner.generatePath(
-          new PathConstraints(1, 1),
-          new PathPoint(new Translation2d(0, 0), Rotation2d.fromDegrees(0), Rotation2d.fromDegrees(0)),
-// position, heading(direction of travel), holonomic rotation
-          new PathPoint(new Translation2d(0, 3), Rotation2d.fromDegrees(90), Rotation2d.fromDegrees(90)),
-// position, heading(direction of travel), holonomic rotation
-          new PathPoint(new Translation2d(3, 3), Rotation2d.fromDegrees(0), Rotation2d.fromDegrees(0))
-          // position, heading(direction of travel), holonomic rotation
-                                        );
+    
+            example = PathPlanner.loadPath("path1", 0.4,0.5);
     } else
     {
-      List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("SamplePath", new PathConstraints(4, 3));
+      List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("1path.wpilib", new PathConstraints(0.4, 1));
       // This is just an example event map. It would be better to have a constant, global event map
       // in your code that will be used by all path following commands.
       HashMap<String, Command> eventMap = new HashMap<>();
