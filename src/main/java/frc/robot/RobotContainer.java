@@ -5,21 +5,21 @@
 
 package frc.robot;
 
+import java.io.File;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.swerve.AbsoluteDrive;
+import frc.robot.commands.swerve.TeleopDrive;
 import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.commands.swerve.*;
-
-import java.io.File;
 
 
 /**
@@ -36,7 +36,7 @@ public class RobotContainer
     private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
     
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    CommandXboxController driverXbox = SingletonCommandXboxController.INSTANCE;
+    CommandXboxController driverXbox = new CommandXboxController(0);
 
 
     AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,

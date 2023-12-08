@@ -13,7 +13,6 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.SingletonCommandXboxController;
 import frc.robot.commands.swerve.TeleopDrive;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -26,7 +25,6 @@ public class SwerveSubsystem extends SubsystemBase {
     //swerve drive object
     private final SwerveDrive swerveDrive;
     private SwerveAutoBuilder autoBuilder = null;
-    private final CommandXboxController driverXbox = SingletonCommandXboxController.INSTANCE;
 
     public SwerveSubsystem(File directory){
         SwerveDriveTelemetry.verbosity = SwerveDriveTelemetry.TelemetryVerbosity.HIGH;
@@ -115,20 +113,7 @@ public class SwerveSubsystem extends SubsystemBase {
         return swerveDrive.getPitch();
     }
 
-    public Command getDefaultCommand(){
-
-        Command defaultCommand = new TeleopDrive(this,
-                driverXbox::getLeftX,
-                driverXbox::getLeftY,
-                () -> -driverXbox.getRightX(),
-                () -> driverXbox.getHID().getLeftBumper(),
-                false,
-                true
-        );
-
-        return null;
-    }
-
+   
 
 
 
