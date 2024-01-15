@@ -24,15 +24,14 @@ public class SwerveSubsystem extends SubsystemBase {
       /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public  double            maximumSpeed = Units.feetToMeters(14.5);
+  public  double            maximumSpeed = 3.0;
   /**
    * The auto builder for PathPlanner, there can only ever be one created so we save it just incase we generate multiple
    * paths with events.
    */
-    private SwerveAutoBuilder autoBuilder = null;
 
     public SwerveSubsystem(File directory){
-        SwerveDriveTelemetry.verbosity = SwerveDriveTelemetry.TelemetryVerbosity.HIGH;
+        SwerveDriveTelemetry.verbosity = SwerveDriveTelemetry.TelemetryVerbosity.NONE;
         try {
             swerveDrive = new SwerveParser(directory).createSwerveDrive();
         } catch (Exception e) {
@@ -53,7 +52,9 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveDriveKinematics getKinematics() {
         return swerveDrive.kinematics;
     }
-
+    public void resetOdometry() {
+        swerveDrive.resetOdometry(new Pose2d());
+    }
     public void resetOdometry(Pose2d initialHolonomicPose) {
         swerveDrive.resetOdometry(initialHolonomicPose);
     }
@@ -117,7 +118,9 @@ public class SwerveSubsystem extends SubsystemBase {
     public Rotation2d getPitch() {
         return swerveDrive.getPitch();
     }
-
+    public Rotation2d getYaw(){
+        return swerveDrive.getYaw();
+    }
    
 
 

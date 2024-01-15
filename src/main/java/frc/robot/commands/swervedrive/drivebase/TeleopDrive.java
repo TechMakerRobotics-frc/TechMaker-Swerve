@@ -5,7 +5,6 @@
 package frc.robot.commands.swervedrive.drivebase;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.util.function.BooleanSupplier;
@@ -56,14 +55,17 @@ public class TeleopDrive extends CommandBase
     double xVelocity   = Math.pow(vX.getAsDouble(), 3);
     double yVelocity   = Math.pow(vY.getAsDouble(), 3);
     double angVelocity = Math.pow(omega.getAsDouble(), 3);
-    SmartDashboard.putNumber("vX", xVelocity);
+    /*SmartDashboard.putNumber("vX", xVelocity);
     SmartDashboard.putNumber("vY", yVelocity);
     SmartDashboard.putNumber("omega", angVelocity);
-
+    SmartDashboard.putNumber("Distance X", swerve.getPose().getX());
+    SmartDashboard.putNumber("Distance Y", swerve.getPose().getY());
+    SmartDashboard.putNumber("Heading", swerve.getPose().getRotation().getDegrees());
+*/
     // Drive using raw values.
     swerve.drive(new Translation2d(xVelocity * swerve.maximumSpeed, yVelocity * swerve.maximumSpeed),
                  angVelocity * controller.config.maxAngularVelocity,
-                 driveMode.getAsBoolean(),false);
+                 driveMode.getAsBoolean() ,false);
   }
 
   // Called once the command ends or is interrupted.

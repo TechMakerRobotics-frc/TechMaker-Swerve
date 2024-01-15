@@ -9,17 +9,16 @@ import java.io.File;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.swervedrive.auto.*;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.swervedrive.drivebase.AbsoluteDrive;
-import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
+import frc.robot.commands.swervedrive.auto.MoveXY;
+import frc.robot.commands.swervedrive.auto.MoveXYHeading;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -34,52 +33,28 @@ public class RobotContainer
    // Replace with CommandPS4Controller or CommandJoystick if needed
    CommandXboxController driverXbox = new CommandXboxController(0);
 
-
-   AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
-   // Applies deadbands and inverts controls because joysticks
-   // are back-right positive while robot
-   // controls are front-left positive
-   () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-                                OperatorConstants.LEFT_Y_DEADBAND),
-   () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-                                OperatorConstants.LEFT_X_DEADBAND),
-   () -> -driverXbox.getRightX(),
-   () -> -driverXbox.getRightY());
-
-AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
-                  () ->
-                      MathUtil.applyDeadband(driverXbox.getLeftY(),
-                                             OperatorConstants.LEFT_Y_DEADBAND),
-                  () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-                                               OperatorConstants.LEFT_X_DEADBAND),
-                  () -> driverXbox.getRawAxis(2));
-TeleopDrive simClosedFieldRel = new TeleopDrive(drivebase,
-() -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-                          OperatorConstants.LEFT_Y_DEADBAND),
-() -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-                          OperatorConstants.LEFT_X_DEADBAND),
-() -> driverXbox.getRawAxis(2), () -> true);
-
 TeleopDrive closedFieldRel = new TeleopDrive(
         drivebase,
         () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
                                   OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
                                   OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRawAxis(3), () -> true);
+        () -> (driverXbox.getRawAxis(2)-driverXbox.getRawAxis(3)), () -> true);
 
 
-
+        double x = 1.05;
+        double y = 1.1;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
+       SmartDashboard.putNumber("Distancia X", x);
+       SmartDashboard.putNumber("Distancia Y", y);
+       SmartDashboard.putNumber("Direcao", 90);
         // Configure the trigger bindings
-        configureBindings();
+       
 
-
-
-        drivebase.setDefaultCommand(closedAbsoluteDrive);
+        
     }
     
     
@@ -92,15 +67,13 @@ TeleopDrive closedFieldRel = new TeleopDrive(
      * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
      * joysticks}.
      */
-    private void configureBindings()
+    void configureBindings()
     {
        
         driverXbox.rightBumper().onTrue(new InstantCommand(drivebase::zeroGyro));
-
-        driverXbox.a().toggleOnTrue(closedAbsoluteDrive);
-        
-        // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-        // cancelling on release.
+        driverXbox.leftBumper().onTrue(new InstantCommand(drivebase::resetOdometry));
+        driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
+        drivebase.setDefaultCommand(closedFieldRel);
     }
     
     
@@ -112,17 +85,20 @@ TeleopDrive closedFieldRel = new TeleopDrive(
    */
   public Command getAutonomousCommand()
   {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(drivebase);
+      double x = SmartDashboard.getNumber("Distancia X", 1.05);
+      double y = SmartDashboard.getNumber("Distancia Y", 1.1);
+      double heading = SmartDashboard.getNumber("Direcao", 90);
+
+      return new SequentialCommandGroup(new MoveXYHeading(x,y,heading, drivebase),
+                                        new MoveXY(1, 0, drivebase),
+                                        new MoveXYHeading(0, 0, 0, drivebase));
+
+    // 1 metro de x = 1.05
+    // 1 metro de y = 1.10
   }
 
   public void setDriveMode()
   {
     //drivebase.setDefaultCommand();
-  }
-
-  public void setMotorBrake(boolean brake)
-  {
-    drivebase.setMotorBrake(brake);
   }
 }
