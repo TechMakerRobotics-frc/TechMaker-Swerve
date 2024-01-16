@@ -20,6 +20,8 @@ public class MoveXY extends CommandBase {
   private final SwerveController controller;
   double lastTimestamp;
   double lastErrorX = 0;
+  double lastErrorY = 0;
+
   public MoveXY(double distanceX, double distanceY, SwerveSubsystem swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.distanceX = distanceX;
@@ -38,6 +40,7 @@ public class MoveXY extends CommandBase {
     SmartDashboard.putString("O Johnny é calvo?", "NAO");
     lastTimestamp = Timer.getFPGATimestamp();
     lastErrorX = 0;
+    lastErrorY = 0;
 
   }
 
@@ -48,47 +51,58 @@ public class MoveXY extends CommandBase {
     double speedX = 0;
     double speedY = 0;
     
+    
     finish = true;
     if(Math.abs(swerve.getPose().getX())<Math.abs(distanceX))
     {
       finish = false;
-
     }
     if(Math.abs(swerve.getPose().getY())<Math.abs(distanceY))
     {
-      speedY = 0.5;
-      Math.copySign(speedY, distanceY);
       finish = false;
-
     }
+
     // Cálculos -PID-
     double sensorX = swerve.getPose().getX();
     double errorX = distanceX - sensorX;
     speedX = Auton.kp*errorX;
+
+    double sensorY = swerve.getPose().getX();
+    double errorY = distanceY - sensorY;
+    speedY = Auton.kp*errorY;
+
     double xVelocity   = Math.pow(speedX, 3);
-    double yVelocity   = Math.pow(0, 3);
-    double angVelocity = Math.pow(0, 3);
+    double yVelocity   = Math.pow(speedY, 3);
+    //velocidade do giro
+    double angVelocity = Math.pow(speedX, 3);
+
 
 
     double errorSumX = 0;
+    double errorSumY = 0;
     
     double dt = Timer.getFPGATimestamp() - lastTimestamp;
-    double errorRate = (errorX - lastErrorX) / dt;
+    double errorRateX = (errorX - lastErrorX) / dt;
+    double errorRateY = (errorY - lastErrorY) / dt;
 
     errorSumX += errorX * dt;
+    errorSumY += errorY * dt;
 
-    speedX = Auton.kp * errorX + Auton.ki * errorSumX + Auton.kd * errorRate;
+    speedX = Auton.kp * errorX + Auton.ki * errorSumX + Auton.kd * errorRateX;
+    speedY = Auton.kp * errorY + Auton.ki * errorSumY + Auton.kd * errorRateY;
     lastTimestamp = Timer.getFPGATimestamp();
     lastErrorX = errorX;
-
-    /*double sensorY = swerve.getPose().getY();
-    double errorY = distanceY - sensorY;
-    speedY = Auton.kp*errorY; */
+    lastErrorY = errorY;
 
     SmartDashboard.putNumber("sensorX", sensorX);
     SmartDashboard.putNumber("errorX", errorX);
     SmartDashboard.putNumber("speedX", speedX);
     SmartDashboard.putNumber("xVelocity", xVelocity);
+  
+    SmartDashboard.putNumber("sensorY", sensorY);
+    SmartDashboard.putNumber("errorY", errorY);
+    SmartDashboard.putNumber("speedY", speedY);
+    SmartDashboard.putNumber("yVelocity", yVelocity);
     
     
   
