@@ -19,6 +19,7 @@ public class MoveXY extends CommandBase {
   boolean finish = false;
   private final SwerveController controller;
   double lastTimestamp;
+  double lastErrorX = 0;
   public MoveXY(double distanceX, double distanceY, SwerveSubsystem swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.distanceX = distanceX;
@@ -34,8 +35,9 @@ public class MoveXY extends CommandBase {
   public void initialize() {
     swerve.resetOdometry();
     swerve.zeroGyro();
-    SmartDashboard.putString("Ja acabou", "NAO");
+    SmartDashboard.putString("O Johnny é calvo?", "NAO");
     lastTimestamp = Timer.getFPGATimestamp();
+    lastErrorX = 0;
 
   }
 
@@ -59,7 +61,7 @@ public class MoveXY extends CommandBase {
       finish = false;
 
     }
-    // Cálculos -P-
+    // Cálculos -PID-
     double sensorX = swerve.getPose().getX();
     double errorX = distanceX - sensorX;
     speedX = Auton.kp*errorX;
@@ -67,15 +69,17 @@ public class MoveXY extends CommandBase {
     double yVelocity   = Math.pow(0, 3);
     double angVelocity = Math.pow(0, 3);
 
-    // Cálculos -I-
+
     double errorSumX = 0;
     
     double dt = Timer.getFPGATimestamp() - lastTimestamp;
+    double errorRate = (errorX - lastErrorX) / dt;
 
     errorSumX += errorX * dt;
 
-    speedX = Auton.kp * errorX + Auton.ki * errorSumX;
+    speedX = Auton.kp * errorX + Auton.ki * errorSumX + Auton.kd * errorRate;
     lastTimestamp = Timer.getFPGATimestamp();
+    lastErrorX = errorX;
 
     /*double sensorY = swerve.getPose().getY();
     double errorY = distanceY - sensorY;
@@ -99,7 +103,7 @@ public class MoveXY extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     swerve.lock();
-    SmartDashboard.putString("Ja acabou", "SIM");
+    SmartDashboard.putString("O Johnny é calvo?", "SIM");
   }
 
   // Returns true when the command should end.

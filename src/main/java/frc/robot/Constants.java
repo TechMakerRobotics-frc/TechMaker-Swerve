@@ -27,7 +27,8 @@ public final class Constants
     public static final class Auton
     {
         public static final double kp = 0.46;
-        public static final double ki = 0.11;
+        public static final double ki = 0.17;
+        public static final double kd = 0.01;
         
         public static final double MAX_SPEED        = 4;
         public static final double MAX_ACCELERATION = 2;

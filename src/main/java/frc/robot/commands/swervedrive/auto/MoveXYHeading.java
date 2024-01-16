@@ -33,7 +33,7 @@ public class MoveXYHeading extends CommandBase {
   @Override
   public void initialize() {
     swerve.resetOdometry();
-    SmartDashboard.putString("Ja acabou", "NAO");
+    SmartDashboard.putString("O Johnny é calvo?", "NAO");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -79,7 +79,7 @@ public class MoveXYHeading extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     swerve.lock();
-    SmartDashboard.putString("Ja acabou", "SIM");
+    SmartDashboard.putString("O Johnny é calvo?", "SIM");
   }
 
   // Returns true when the command should end.
