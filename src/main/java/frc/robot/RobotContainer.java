@@ -42,7 +42,7 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         () -> (driverXbox.getRawAxis(2)-driverXbox.getRawAxis(3)), () -> true);
 
 
-        double x = 1.05;
+        double x = 2;
         double y = 1.1;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -85,14 +85,13 @@ TeleopDrive closedFieldRel = new TeleopDrive(
    */
   public Command getAutonomousCommand()
   {
-      double x = SmartDashboard.getNumber("Distancia X", 1.05);
+      double x = SmartDashboard.getNumber("Distancia X", 2);
       double y = SmartDashboard.getNumber("Distancia Y", 1.1);
       double heading = SmartDashboard.getNumber("Direcao", 90);
 
-      return new SequentialCommandGroup(new MoveXYHeading(x,y,heading, drivebase),
+      return new MoveXY(x,y, drivebase);/*SequentialCommandGroup(new MoveXYHeading(x,y,heading, drivebase),
                                         new MoveXY(1, 0, drivebase),
-                                        new MoveXYHeading(0, 0, 0, drivebase));
-
+                                        new MoveXYHeading(0, 0, 0, drivebase)); */
     // 1 metro de x = 1.05
     // 1 metro de y = 1.10
   }

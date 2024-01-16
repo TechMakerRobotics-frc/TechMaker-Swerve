@@ -5,18 +5,20 @@
 package frc.robot.commands.swervedrive.auto;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveController;
+import frc.robot.Constants.Auton;
 
 public class MoveXY extends CommandBase {
   /** Creates a new MoveStraight. */
   double distanceX, distanceY;
   SwerveSubsystem swerve;
   boolean finish = false;
-  PIDController pidControllerX;
   private final SwerveController controller;
+  double lastTimestamp;
   public MoveXY(double distanceX, double distanceY, SwerveSubsystem swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.distanceX = distanceX;
@@ -25,32 +27,28 @@ public class MoveXY extends CommandBase {
     SmartDashboard.putNumber("Distance Yi", distanceY);
     this.swerve = swerve;
     this.controller = swerve.getSwerveController();
-
-    pidControllerX = new PIDController(0.088, 0.04, 0);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     swerve.resetOdometry();
+    swerve.zeroGyro();
     SmartDashboard.putString("Ja acabou", "NAO");
+    lastTimestamp = Timer.getFPGATimestamp();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Distance X", distanceX);
-    SmartDashboard.putNumber("Difference X", swerve.getPose().getX());
-    SmartDashboard.putNumber("Distance Y", distanceY);
-    SmartDashboard.putNumber("Difference Y", swerve.getPose().getY());
+    
     double speedX = 0;
     double speedY = 0;
     
     finish = true;
     if(Math.abs(swerve.getPose().getX())<Math.abs(distanceX))
     {
-      speedX = 0.5;
-      Math.copySign(speedX, distanceX);
       finish = false;
 
     }
@@ -61,9 +59,34 @@ public class MoveXY extends CommandBase {
       finish = false;
 
     }
+    // Cálculos -P-
+    double sensorX = swerve.getPose().getX();
+    double errorX = distanceX - sensorX;
+    speedX = Auton.kp*errorX;
     double xVelocity   = Math.pow(speedX, 3);
-    double yVelocity   = Math.pow(speedY, 3);
+    double yVelocity   = Math.pow(0, 3);
     double angVelocity = Math.pow(0, 3);
+
+    // Cálculos -I-
+    double errorSumX = 0;
+    
+    double dt = Timer.getFPGATimestamp() - lastTimestamp;
+
+    errorSumX += errorX * dt;
+
+    speedX = Auton.kp * errorX + Auton.ki * errorSumX;
+    lastTimestamp = Timer.getFPGATimestamp();
+
+    /*double sensorY = swerve.getPose().getY();
+    double errorY = distanceY - sensorY;
+    speedY = Auton.kp*errorY; */
+
+    SmartDashboard.putNumber("sensorX", sensorX);
+    SmartDashboard.putNumber("errorX", errorX);
+    SmartDashboard.putNumber("speedX", speedX);
+    SmartDashboard.putNumber("xVelocity", xVelocity);
+    
+    
   
     // Drive using raw values.
     swerve.drive(new Translation2d(xVelocity * swerve.maximumSpeed, yVelocity * swerve.maximumSpeed),
@@ -82,6 +105,6 @@ public class MoveXY extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finish;
+    return false;
   }
 }

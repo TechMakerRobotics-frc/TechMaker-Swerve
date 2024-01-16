@@ -15,7 +15,6 @@ public class MoveXYHeading extends CommandBase {
   double distanceX, distanceY, direction;
   SwerveSubsystem swerve;
   boolean finish = false;
-  PIDController pidControllerX;
   private final SwerveController controller;
   public MoveXYHeading(double distanceX, double distanceY,double heading, SwerveSubsystem swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
