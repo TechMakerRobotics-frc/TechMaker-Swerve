@@ -72,9 +72,9 @@ public class MoveXY extends CommandBase {
     speedY = Auton.kp*errorY;
 
     double xVelocity   = Math.pow(speedX, 3);
-    double yVelocity   = Math.pow(speedY, 3);
+    double yVelocity   = Math.pow(0, 3);
     //velocidade do giro
-    double angVelocity = Math.pow(speedX, 3);
+    double angVelocity = Math.pow(0, 3);
 
 
 
