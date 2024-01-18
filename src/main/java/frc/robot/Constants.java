@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
-import swervelib.parser.PIDFConfig;
+//import swervelib.parser.PIDFConfig;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean constants. This
@@ -26,9 +26,9 @@ public final class Constants
 
     public static final class Auton
     {
-        public static final double kp = 0.46;
-        public static final double ki = 0.17;
-        public static final double kd = 0.01;
+        public static final double kp = 0.73;
+        public static final double ki = 0.38;
+        public static final double kd = 0;
         
         // P = 0.46 - I = 0.17 - D = 0.01 
 

@@ -67,12 +67,12 @@ public class MoveXY extends CommandBase {
     double errorX = distanceX - sensorX;
     speedX = Auton.kp*errorX;
 
-    double sensorY = swerve.getPose().getX();
+    double sensorY = swerve.getPose().getY();
     double errorY = distanceY - sensorY;
     speedY = Auton.kp*errorY;
 
     double xVelocity   = Math.pow(speedX, 3);
-    double yVelocity   = Math.pow(0, 3);
+    double yVelocity   = Math.pow(speedY, 3);
     //velocidade do giro
     double angVelocity = Math.pow(0, 3);
 
@@ -123,6 +123,6 @@ public class MoveXY extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finish;
   }
 }

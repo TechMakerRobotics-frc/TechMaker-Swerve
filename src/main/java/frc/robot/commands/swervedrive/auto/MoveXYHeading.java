@@ -7,7 +7,7 @@ package frc.robot.commands.swervedrive.auto;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.Auton;
+//import frc.robot.Constants.Auton;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveController;
 
@@ -50,9 +50,9 @@ public class MoveXYHeading extends CommandBase {
     double speedY = 0;
     double heading = 0;
 
-    double errorH;
-    double errorRateH;
-    double errorSumH;
+    //double errorH;
+    //double errorRateH;
+    //double errorSumH;
 
     
     finish = true;
@@ -72,7 +72,7 @@ public class MoveXYHeading extends CommandBase {
     }
     double xVelocity   = Math.pow(speedX, 3);
     double yVelocity   = Math.pow(speedY, 3);
-    double angVelocity = Math.pow(heading, 3);
+    double angVelocity = Math.pow(speedX, 3);
   
     // Drive using raw values.
     swerve.drive(new Translation2d(xVelocity * swerve.maximumSpeed, yVelocity * swerve.maximumSpeed),

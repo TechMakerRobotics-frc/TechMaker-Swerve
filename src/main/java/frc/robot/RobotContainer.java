@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.auto.MoveXY;
 import frc.robot.commands.swervedrive.auto.MoveXYHeading;
+//import frc.robot.commands.swervedrive.auto.MoveXYHeading;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.SwerveSubsystem;
 /**
@@ -33,6 +34,7 @@ public class RobotContainer
    // Replace with CommandPS4Controller or CommandJoystick if needed
    CommandXboxController driverXbox = new CommandXboxController(0);
 
+    
 TeleopDrive closedFieldRel = new TeleopDrive(
         drivebase,
         () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
@@ -43,7 +45,7 @@ TeleopDrive closedFieldRel = new TeleopDrive(
 
 
         double x = 2.7;
-        double y = 0;
+        double y = 2.7;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
@@ -85,16 +87,23 @@ TeleopDrive closedFieldRel = new TeleopDrive(
    */
   public Command getAutonomousCommand()
   {
-      double x = SmartDashboard.getNumber("Distancia X", 2.7);
+      double x = SmartDashboard.getNumber("Distancia X", 0);
       double y = SmartDashboard.getNumber("Distancia Y", 0);
-      double heading = SmartDashboard.getNumber("Direcao", 90);
+      double heading = SmartDashboard.getNumber("Direcao", 0);
 
-      return new MoveXY(x,y, drivebase);/*SequentialCommandGroup(new MoveXYHeading(x,y,heading, drivebase),
-                                        new MoveXY(1, 0, drivebase),
-                                        new MoveXYHeading(0, 0, 0, drivebase)); */
+      return new SequentialCommandGroup(new MoveXY(2.7, 0, drivebase),
+                                        new MoveXY(0, 2.7, drivebase),
+                                        new MoveXY(-2.7, 0, drivebase),
+                                        new MoveXY(0, -2.5, drivebase),
+                                        new MoveXY(2.5, 2.5, drivebase),
+                                        new MoveXY(0, -2.5, drivebase));
     // 1 metro de x = 1.05
     // 1 metro de y = 1.10
+    // MoveXY(x, y, drivebase); 
+
+    
   }
+
 
   public void setDriveMode()
   {
