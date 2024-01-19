@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -77,7 +78,7 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
         drivebase.setDefaultCommand(closedFieldRel);
     }
-    
+  
     
     
   /**
@@ -92,11 +93,16 @@ TeleopDrive closedFieldRel = new TeleopDrive(
       double heading = SmartDashboard.getNumber("Direcao", 0);
 
       return new SequentialCommandGroup(new MoveXY(2.7, 0, drivebase),
+                                        new WaitCommand(2),
                                         new MoveXY(0, 2.7, drivebase),
+                                        new WaitCommand(2),
                                         new MoveXY(-2.7, 0, drivebase),
+                                        new WaitCommand(2),
                                         new MoveXY(0, -2.5, drivebase),
-                                        new MoveXY(2.5, 2.5, drivebase),
-                                        new MoveXY(0, -2.5, drivebase));
+                                        new WaitCommand(2),
+                                        new MoveXY(2.7, 2.7, drivebase));
+
+    // new MoveXYHeading(2.2, 2.2, 180, drivebase)
     // 1 metro de x = 1.05
     // 1 metro de y = 1.10
     // MoveXY(x, y, drivebase); 

@@ -26,7 +26,7 @@ public final class Constants
 
     public static final class Auton
     {
-        public static final double kp = 0.73;
+        public static final double kp = 0.75;
         public static final double ki = 0.38;
         public static final double kd = 0;
         

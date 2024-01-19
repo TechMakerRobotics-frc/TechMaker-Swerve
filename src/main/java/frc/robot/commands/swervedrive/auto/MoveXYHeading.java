@@ -58,12 +58,12 @@ public class MoveXYHeading extends CommandBase {
     finish = true;
     if(swerve.getPose().getX()<distanceX)
     {
-      speedX = 0.5;
+      speedX = 0.7;
       finish = false;
 
     }
     if(swerve.getPose().getY()<distanceY){
-      speedY = 0.5;
+      speedY = 0.7;
       finish = false;
     }
     if(swerve.getYaw().getDegrees()<direction){
