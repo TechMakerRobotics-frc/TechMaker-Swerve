@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.auto.MoveXY;
 import frc.robot.commands.swervedrive.auto.MoveXYHeading;
+import frc.robot.commands.swervedrive.auto.Autonomo;
 //import frc.robot.commands.swervedrive.auto.MoveXYHeading;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -86,27 +87,8 @@ TeleopDrive closedFieldRel = new TeleopDrive(
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand()
-  {
-      double x = SmartDashboard.getNumber("Distancia X", 0);
-      double y = SmartDashboard.getNumber("Distancia Y", 0);
-      double heading = SmartDashboard.getNumber("Direcao", 0);
-
-      return new SequentialCommandGroup(new MoveXY(2.7, 0, drivebase),
-                                        new WaitCommand(2),
-                                        new MoveXY(0, 2.7, drivebase),
-                                        new WaitCommand(2),
-                                        new MoveXY(-2.7, 0, drivebase),
-                                        new WaitCommand(2),
-                                        new MoveXY(0, -2.5, drivebase),
-                                        new WaitCommand(2),
-                                        new MoveXY(2.7, 2.7, drivebase));
-
-    // new MoveXYHeading(2.2, 2.2, 180, drivebase)
-    // 1 metro de x = 1.05
-    // 1 metro de y = 1.10
-    // MoveXY(x, y, drivebase); 
-
+  public SequentialCommandGroup getAutonomousCommand() {
+        return new Autonomo(drivebase);
     
   }
 
@@ -116,3 +98,10 @@ TeleopDrive closedFieldRel = new TeleopDrive(
     //drivebase.setDefaultCommand();
   }
 }
+/*double x = SmartDashboard.getNumber("Distancia X", 0);
+      double y = SmartDashboard.getNumber("Distancia Y", 0);
+      double heading = SmartDashboard.getNumber("Direcao", 0); */
+      // new MoveXYHeading(2.2, 2.2, 180, drivebase)
+    // 1 metro de x = 1.05
+    // 1 metro de y = 1.10
+    // MoveXY(x, y, drivebase); 
