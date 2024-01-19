@@ -73,6 +73,7 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         driverXbox.rightBumper().onTrue(new InstantCommand(drivebase::zeroGyro));
         driverXbox.leftBumper().onTrue(new InstantCommand(drivebase::resetOdometry));
         driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
+        //driverXbox.b().onTrue(new SequentialCommandGroup(drivebase:getAutonomousCommand()));
         drivebase.setDefaultCommand(closedFieldRel);
     }
   
