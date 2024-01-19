@@ -11,18 +11,8 @@ public class Autonomo extends SequentialCommandGroup {
   public Autonomo (SwerveSubsystem drivebase) {
   {
       addCommands(
-  new MoveXY(2.7, 0, drivebase),
-  new WaitCommand(1),
-  new MoveXY(0, 2.7, drivebase),
-  new WaitCommand(1),
-  new MoveXY(-2.7, 0, drivebase),
-  new WaitCommand(1),
-  new MoveXY(0, -2.5, drivebase),
-  new WaitCommand(1),
-  new MoveXY(2.7, 2.7, drivebase),
-  new WaitCommand(1),
-  new MoveXY(0, -2.7, drivebase));
-                                        
+  new MoveXY(2.1, 0, drivebase),
+  new WaitCommand(10));
 }
 }
 }

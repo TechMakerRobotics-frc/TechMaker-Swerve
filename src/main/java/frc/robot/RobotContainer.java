@@ -10,15 +10,11 @@ import java.io.File;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.swervedrive.auto.MoveXY;
-import frc.robot.commands.swervedrive.auto.MoveXYHeading;
 import frc.robot.commands.swervedrive.auto.Autonomo;
 //import frc.robot.commands.swervedrive.auto.MoveXYHeading;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
@@ -46,15 +42,15 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         () -> (driverXbox.getRawAxis(2)-driverXbox.getRawAxis(3)), () -> true);
 
 
-        double x = 2.7;
-        double y = 2.7;
+        double x = 0;
+        double y = 0;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
        SmartDashboard.putNumber("Distancia X", x);
        SmartDashboard.putNumber("Distancia Y", y);
-       SmartDashboard.putNumber("Direcao", 90);
+       SmartDashboard.putNumber("Direcao", 0);
         // Configure the trigger bindings
        
 
