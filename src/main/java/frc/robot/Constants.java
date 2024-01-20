@@ -32,6 +32,11 @@ public final class Constants
         
         // P = 0.46 - I = 0.17 - D = 0.01 
 
+       /* velForward = drivePID.calculate(limelight.getALimelight(), strafeOffSet);
+        velStrafe = strafePID.calculate(limelight.getXLimelight(), strafeOffSet);
+        velGiro = rotationPID.calculate(limelight.getYaw(),rotationOffset); */
+
+
         public static final double MAX_SPEED        = 4;
         public static final double MAX_ACCELERATION = 2;
     }

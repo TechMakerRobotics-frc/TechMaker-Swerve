@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.auto.Autonomo;
+import frc.robot.commands.swervedrive.auto.AutonomoControle;
 //import frc.robot.commands.swervedrive.auto.MoveXYHeading;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -73,7 +74,10 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         driverXbox.rightBumper().onTrue(new InstantCommand(drivebase::zeroGyro));
         driverXbox.leftBumper().onTrue(new InstantCommand(drivebase::resetOdometry));
         driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
-        //driverXbox.b().onTrue(new SequentialCommandGroup(drivebase:getAutonomousCommand()));
+        driverXbox.b().onTrue(new InstantCommand(() -> {
+          SequentialCommandGroup autonomousCommand = new AutonomoControle(drivebase);
+          autonomousCommand.schedule(); // Agendar a execução do SequentialCommandGroup
+      }));
         drivebase.setDefaultCommand(closedFieldRel);
     }
   
