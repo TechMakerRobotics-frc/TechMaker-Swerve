@@ -1,3 +1,4 @@
+
 package frc.robot.commands.swervedrive.auto;
 
 
@@ -17,11 +18,8 @@ public class AutonomoControle extends SequentialCommandGroup {
   new AutonomoDiagonais(drivebase));
   
   // para andar 2metros x = 2.1
-
   // para andar 2metros y = 2.2
                                         
-}
-}
-
-
+    }
+  }
 }
