@@ -64,7 +64,7 @@ TeleopDrive closedFieldRel = new TeleopDrive(
      * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
      * predicate, or via the named factories in {@link
      * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-     * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+     //* CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
      * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
      * joysticks}.
      */
@@ -74,10 +74,7 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         driverXbox.rightBumper().onTrue(new InstantCommand(drivebase::zeroGyro));
         driverXbox.leftBumper().onTrue(new InstantCommand(drivebase::resetOdometry));
         driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
-        driverXbox.b().onTrue(new InstantCommand(() -> {
-          SequentialCommandGroup autonomousCommand = new AutonomoControle(drivebase);
-          autonomousCommand.schedule(); // Agendar a execução do SequentialCommandGroup
-      }));
+        driverXbox.b().onTrue(new AutonomoControle(drivebase));
         drivebase.setDefaultCommand(closedFieldRel);
     }
   
