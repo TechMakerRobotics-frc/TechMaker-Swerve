@@ -1,3 +1,4 @@
+
 package frc.robot.commands.swervedrive.auto;
 
 
@@ -14,21 +15,18 @@ public class AutonomoDiagonais extends SequentialCommandGroup {
     drivebase.removeDefaultCommand();
       addCommands(
         
-  new MoveXY(2.1, 0, drivebase),
+  new MoveXYHeading(2.1, 0, 0, drivebase),
   new WaitCommand(1),
-  new MoveXY(-2.1, 2.2, drivebase),
+  new MoveXYHeading(-2.1, 2.2, 0, drivebase),
   new WaitCommand(1),
-  new MoveXY(0, -2.2, drivebase),
+  new MoveXYHeading(0, -2.2, 0, drivebase),
   new WaitCommand(1),
-  new MoveXY(2.1, 2.2, drivebase),
+  new MoveXYHeading(2.1, 2.2, 0, drivebase),
   new WaitCommand(1));
   
   // para andar 2metros x = 2.1
-
   // para andar 2metros y = 2.2
                                         
-}
-}
-
-
+    }
+  }
 }
