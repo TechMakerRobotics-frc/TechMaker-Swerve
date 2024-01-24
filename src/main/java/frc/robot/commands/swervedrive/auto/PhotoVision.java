@@ -37,7 +37,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.IntegerArrayPublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-//trocar para SmartDashboard
+//trocar para SmartDashboard?
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -153,9 +153,10 @@ public class PhotoVision extends TimedRobot {
 
     var estimator = new AprilTagPoseEstimator(poseEstConfig);
 
-    // Mudar para o SmartDashboard
+    // Mudar para o SmartDashboard?
     NetworkTable tagsTable = NetworkTableInstance.getDefault().getTable("apriltags");
     IntegerArrayPublisher pubTags = tagsTable.getIntegerArrayTopic("tags").publish();
+    //SmartDashboard.getDefault().getTable("apriltags");
 
     // This cannot be 'true'. The program will never exit if it is. This
     // lets the robot stop this thread when restarting robot code or
