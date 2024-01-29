@@ -28,6 +28,9 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class RobotContainer
 {
+  // private AprilTagVision aprilTagVision;
+  // Subsystem ^
+
    private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
    
    // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -54,6 +57,27 @@ TeleopDrive closedFieldRel = new TeleopDrive(
        SmartDashboard.putNumber("Direcao", 90);
         // Configure the trigger bindings
        
+        /*if (Constants.getMode() != Mode.REPLAY) {
+      switch (Constants.getRobot()) {
+        case ROBOT_2023C:
+          drive =
+              new Drive(
+                  new GyroIOPigeon2(),
+                  new ModuleIOSparkMax(0),
+                  new ModuleIOSparkMax(1),
+                  new ModuleIOSparkMax(2),
+                  new ModuleIOSparkMax(3));
+          arm = new Arm(new ArmIOSparkMax(), new ArmSolverIOKairos(4));
+          gripper = new Gripper(new GripperIOSparkMax());
+          cubeIntake = new CubeIntake(new CubeIntakeIOSparkMax());
+          aprilTagVision =
+              new AprilTagVision(
+                  new AprilTagVisionIONorthstar("northstar_0"),
+                  new AprilTagVisionIONorthstar("northstar_1"),
+                  new AprilTagVisionIONorthstar("northstar_2"),
+                  new AprilTagVisionIONorthstar("northstar_3"));
+          objectiveTracker = new ObjectiveTracker(new NodeSelectorIOServer());
+          break; */
 
         
     }
@@ -96,10 +120,25 @@ TeleopDrive closedFieldRel = new TeleopDrive(
     //drivebase.setDefaultCommand();
   }
 }
-/*double x = SmartDashboard.getNumber("Distancia X", 0);
-      double y = SmartDashboard.getNumber("Distancia Y", 0);
-      double heading = SmartDashboard.getNumber("Direcao", 0); */
-      // new MoveXYHeading(2.2, 2.2, 180, drivebase)
-    // 1 metro de x = 1.05
-    // 1 metro de y = 1.10
-    // MoveXY(x, y, drivebase); 
+/*
+Código para apriltag seguindo do RobotCode 2023
+
+if (aprilTagVision == null) {
+      // In replay, match the number of instances for each robot
+      switch (Constants.getRobot()) {
+        case ROBOT_2023C:
+          aprilTagVision =
+              new AprilTagVision(
+                  new AprilTagVisionIO() {},
+                  new AprilTagVisionIO() {},
+                  new AprilTagVisionIO() {},
+                  new AprilTagVisionIO() {});
+          break;
+        case ROBOT_2023P:
+          aprilTagVision = new AprilTagVision(new AprilTagVisionIO() {});
+          break;
+        default:
+          aprilTagVision = new AprilTagVision();
+          break;
+      }
+    } */
