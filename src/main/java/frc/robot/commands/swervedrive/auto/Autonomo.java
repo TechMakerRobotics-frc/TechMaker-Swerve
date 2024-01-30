@@ -28,3 +28,32 @@ public class Autonomo extends SequentialCommandGroup {
     }
   }
 }
+
+// Outros tipos de comandos para serem usados, (lembre-se das importações):
+
+/* Permite que os comandos sejam executados até um determinado tempo limite:
+    new DeadlineGroup(
+        new CLASSE-USADA(driveSubsystem).withTimeout(5),
+        new CLASSE-USADA(driveSubsystem).withTimeout(3)
+    ),
+ */
+
+/* Executa todos os comandos paralelamente e avança quando todos terminam:
+
+    new ParallelCommandGroup(
+        new CLASSE-USADA(driveSubsystem),
+        new CLASSE-USADA(driveSubsystem)
+    ),
+
+ */
+
+ /* Um comando que executa instantaneamente quando agendado. 
+    É útil para tarefas simples ou ações que não exigem uma execução contínua:
+  
+    new InstantCommand(() -> SmartDashboard.putString("Status", "Acabou o autônomo!")),
+    new InstantCommand(() -> shooter.shoot(), shooter)
+    new InstantCommand(() -> led.setColor(Color.BLUE), led)
+    new InstantCommand(() -> System.out.println("Comando Instantâneo Executado!"))
+    new InstantCommand(() -> armMotor.setPosition(0), armMotor)
+
+  */
