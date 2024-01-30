@@ -9,7 +9,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
-//import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -19,15 +18,15 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 
 public class SwerveSubsystem extends SubsystemBase {
 
-    //swerve drive object
+//swerve drive object
     private final SwerveDrive swerveDrive;
-      /**
-   * Maximum speed of the robot in meters per second, used to limit acceleration.
-   */
-  public  double            maximumSpeed = 3.0;
-  /**
-   * The auto builder for PathPlanner, there can only ever be one created so we save it just incase we generate multiple
-   * paths with events.
+
+//Velocidade maxida do robô em metros por segundo, usado para limitar a aceleração.
+   
+  public double maximumSpeed = 3.0;
+
+  /* The auto builder for PathPlanner, there can only ever be one created so we save it just incase we generate multiple
+paths with events.
    */
 
     public SwerveSubsystem(File directory){
@@ -121,8 +120,4 @@ public class SwerveSubsystem extends SubsystemBase {
     public Rotation2d getYaw(){
         return swerveDrive.getYaw();
     }
-   
-
-
-
 }

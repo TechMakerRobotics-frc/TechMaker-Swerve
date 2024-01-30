@@ -1,6 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.swervedrive.drivebase;
 
@@ -11,9 +8,6 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 
-/**
- * An example command that uses an example subsystem.
- */
 public class TeleopDrive extends CommandBase
 {
 
@@ -25,8 +19,6 @@ public class TeleopDrive extends CommandBase
   private final SwerveController controller;
 
   /**
-   * Creates a new ExampleCommand.
-   *
    * @param swerve The subsystem used by this command.
    */
   public TeleopDrive(SwerveSubsystem swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier omega,
@@ -38,14 +30,14 @@ public class TeleopDrive extends CommandBase
     this.omega = omega;
     this.driveMode = driveMode;
     this.controller = swerve.getSwerveController();
-    // Use addRequirements() here to declare subsystem dependencies.
+
+    // Use addRequirements() Para declarar as dependências do sub-sistema.
     addRequirements(swerve);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize()
-  {
+  public void initialize(){
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -60,9 +52,9 @@ public class TeleopDrive extends CommandBase
     SmartDashboard.putNumber("omega", angVelocity);
     SmartDashboard.putNumber("Distance X", swerve.getPose().getX());
     SmartDashboard.putNumber("Distance Y", swerve.getPose().getY());
-    SmartDashboard.putNumber("Heading", swerve.getPose().getRotation().getDegrees());
-*/
-    // Drive using raw values.
+    SmartDashboard.putNumber("Heading", swerve.getPose().getRotation().getDegrees());*/
+
+    // Drive usando valores brutos.
     swerve.drive(new Translation2d(xVelocity * swerve.maximumSpeed, yVelocity * swerve.maximumSpeed),
                  angVelocity * controller.config.maxAngularVelocity,
                  driveMode.getAsBoolean() ,false);
@@ -70,14 +62,12 @@ public class TeleopDrive extends CommandBase
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted)
-  {
+  public void end(boolean interrupted){
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished()
-  {
+  public boolean isFinished(){
     return false;
   }
 }

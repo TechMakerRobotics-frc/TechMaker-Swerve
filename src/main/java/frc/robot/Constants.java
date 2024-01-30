@@ -1,3 +1,4 @@
+
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation3d;
@@ -37,7 +38,7 @@ public final class Constants
 
     public static final class Drivebase
     {
-public static final double WHEEL_LOCK_TIME = 10; // seconds
+public static final double WHEEL_LOCK_TIME = 10; // Segundos
     }
 
     public static class OperatorConstants

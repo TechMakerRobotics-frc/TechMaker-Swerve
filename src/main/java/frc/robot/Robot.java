@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
 
@@ -9,53 +5,34 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-
-
-/**
- * The VM is configured to automatically run this class, and to call the methods corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
- * project.
- */
 public class Robot extends TimedRobot
 {
     private Command autonomousCommand;
     
     private RobotContainer robotContainer;
     
-    
-    /**
-     * This method is run when the robot is first started up and should be used for any
-     * initialization code.
-     */
+// Este método é chamado quando o robô inicia.
     @Override
-    public void robotInit()
-    {
-        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-        // autonomous chooser on the dashboard.
+    public void robotInit(){
         robotContainer = new RobotContainer();
     }
     
-    
-    /**
-     * This method is called every 20 ms, no matter the mode. Use this for items like diagnostics
-     * that you want ran during disabled, autonomous, teleoperated and test.
-     *
-     * <p>This runs after the mode specific periodic methods, but before LiveWindow and
-     * SmartDashboard integrated updating.
-     */
+/*Esse método é chamado a cada 20 ms, não importa o modo. Use isso para itens como diagnósticos 
+que você quer executado durante desativado, autônomo, teleoperado e teste.*/
+
     @Override
     public void robotPeriodic()
     {
-        // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-        // commands, running already-scheduled commands, removing finished or interrupted commands,
-        // and running subsystem periodic() methods.  This must be called from the robot's periodic
-        // block in order for anything in the Command-based framework to work.
+/*Executa o Agendador.  Isso é responsável pelos botões de sondagem, adicionando recém-agendados
+comandos, executando comandos já agendados, removendo comandos concluídos ou interrompidos,
+e execução de métodos periódicos do subsistema.  Isso deve ser chamado a partir do periódico do robô
+para que qualquer coisa na estrutura baseada em comando funcione.*/
+
         CommandScheduler.getInstance().run();
     }
     
     
-    /** This method is called once each time the robot enters Disabled mode. */
+// Este método é chamado uma vez cada vez que o robô entra no modo disable.
     @Override
     public void disabledInit() {}
     
@@ -63,22 +40,19 @@ public class Robot extends TimedRobot
     @Override
     public void disabledPeriodic() {}
     
-    
-    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+/** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit()
     {
         autonomousCommand = robotContainer.getAutonomousCommand();
         
-        // schedule the autonomous command (example)
-        if (autonomousCommand != null)
-        {
+// Agendando um comando autônomo (teste) (example)
+        if (autonomousCommand != null){
             autonomousCommand.schedule();
         }
     }
     
-    
-    /** This method is called periodically during autonomous. */
+// Método chamado periódicamente durante o período autônomo
     @Override
     public void autonomousPeriodic() {}
     
@@ -86,10 +60,11 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
+/*Isso garante que o autônomo pare de funcionar quando
+O Teleop começa a funcionar. Se você quer o autônomo para
+continuar até ser interrompido por outro comando, remover
+esta linha ou comentá-lo.*/
+
         robotContainer.configureBindings();
         if (autonomousCommand != null)
         {
@@ -98,30 +73,30 @@ public class Robot extends TimedRobot
     }
     
     
-    /** This method is called periodically during operator control. */
+// Método chamado periódicamente durante o período Teleoperado.
     @Override
     public void teleopPeriodic() {}
     
-    
+// Este método é chamado quando o robô inicia o modo teste.
     @Override
     public void testInit()
     {
-        // Cancels all running commands at the start of test mode.
+//Cancela todos os comandos em execução no início do modo de teste.
         CommandScheduler.getInstance().cancelAll();
     }
     
     
-    /** This method is called periodically during test mode. */
+// Método chamado periódicamente durante o período de teste.
     @Override
     public void testPeriodic() {}
     
     
-    /** This method is called once when the robot is first started up. */
+//Este método é chamado uma vez quando o robô é iniciado pela primeira vez.
     @Override
     public void simulationInit() {}
     
     
-    /** This method is called periodically whilst in simulation. */
+//Este método é chamado periodicamente enquanto em simulação.
     @Override
     public void simulationPeriodic() {}
 }

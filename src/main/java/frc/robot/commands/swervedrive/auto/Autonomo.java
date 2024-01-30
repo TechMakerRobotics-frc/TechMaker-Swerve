@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Autonomo extends SequentialCommandGroup {
 
-  
   public Autonomo (SwerveSubsystem drivebase){
   {
       addCommands(
@@ -24,7 +23,6 @@ public class Autonomo extends SequentialCommandGroup {
   new WaitCommand(1));
 
   // para andar 2metros x = 2.1
-
   // para andar 2metros y = 2.2
                                         
     }

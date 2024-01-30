@@ -63,6 +63,8 @@ public class MoveXYHeading extends CommandBase {
     if(swerve.getYaw().getDegrees()<distanceH)
     {finish = false;}
 
+    
+
     double xVelocity   = Math.pow(speedX, 3);
     double yVelocity   = Math.pow(speedY, 3);
     double angVelocity = Math.pow(heading, 3);
