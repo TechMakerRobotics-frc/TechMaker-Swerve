@@ -1,16 +1,17 @@
 
-package frc.robot.commands.swervedrive.auto;
+package frc.robot.commands.Auto.AutonomosProntos;
 
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.swervedrive.MoveAuto.MoveXYHeading;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class AutonomoQuadrado extends SequentialCommandGroup {
+public class AutoQuadrado extends SequentialCommandGroup {
 
   Command defaultDriveCommand;
-  public AutonomoQuadrado (SwerveSubsystem drivebase){
+  public AutoQuadrado (SwerveSubsystem drivebase){
   {
     drivebase.removeDefaultCommand();
       addCommands(

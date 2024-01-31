@@ -1,5 +1,5 @@
 
-package frc.robot.commands.swervedrive.Auto;
+package frc.robot.commands.swervedrive.MoveAuto;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

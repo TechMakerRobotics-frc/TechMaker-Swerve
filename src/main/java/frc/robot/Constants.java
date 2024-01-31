@@ -3,6 +3,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import swervelib.math.Matter;
  
 public final class Constants
@@ -50,4 +51,29 @@ public static final double WHEEL_LOCK_TIME = 10; // Segundos
 
         public static final int DRIVER_CONTROLLER_PORT = 0;
     }
+    public static class IntakeConstants {
+        public static final int kIntakeMotor = 5;
+        public static final int kReturnTicks = 7;
+        public static final double kRampRate = 0.3;
+        public static final double kPower = 0.2;
+        public static final double kPowerWait = 0.06;
+
+    }
+
+    public static class ElevadorConstants {
+        public static final int kElevadorMotor = 0;
+        public static final double kPower = 0;    
+        public static final double kp = 0;
+        public static final double ki = 0.0;
+        public static final double kd = 0.01;
+
+
+        }
+
+
+    public static class PDPConstants {
+        public static final int kID = 1;
+        public static final ModuleType kModule = ModuleType.kCTRE;
+        public static final double kMinimumVoltage = 10.5;
+      }
 }

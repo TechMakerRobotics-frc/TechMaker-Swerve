@@ -3,6 +3,7 @@ package frc.robot;
 
 import java.io.File;
 
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,14 +12,17 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.swervedrive.auto.Autonomo;
-import frc.robot.commands.swervedrive.auto.AutonomoControle;
+import frc.robot.commands.Auto.Autonomo;
+import frc.robot.commands.swervedrive.MoveAuto.AutonomoControle;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
+import frc.robot.subsystems.PDP;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class RobotContainer
 {
    private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
+
+   private final PDP pdp = PDP.getInstance();
    
    // Subtitua por CommandPS4Controller ou CommandJoystick se necessário.
    CommandXboxController driverXbox = new CommandXboxController(0);
@@ -37,6 +41,10 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         double y = 2.7;
 
     // The container for the robot. Contains subsystems, OI devices, and commands.
+    
+    Trigger tLowBatt = new Trigger(pdp::getLowVoltage);
+
+
     public RobotContainer(){
        SmartDashboard.putNumber("Distancia X", x);
        SmartDashboard.putNumber("Distancia Y", y);
@@ -60,6 +68,7 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         driverXbox.leftBumper().onTrue(new InstantCommand(drivebase::resetOdometry));
         driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
         driverXbox.b().onTrue(new AutonomoControle(drivebase));
+        
         drivebase.setDefaultCommand(closedFieldRel);
     }
 
