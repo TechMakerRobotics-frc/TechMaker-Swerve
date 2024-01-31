@@ -19,8 +19,7 @@ public class Autonomo extends SequentialCommandGroup {
   new WaitCommand(1),
   new MoveXYHeading(0, -2.2, 0, drivebase),
   new WaitCommand(1),
-  new MoveXYHeading(2.1, 2.2, 0, drivebase),
-  new WaitCommand(1));
+  new MoveXYHeading(2.1, 2.2, 0, drivebase));
 
   // para andar 2metros x = 2.1
   // para andar 2metros y = 2.2
