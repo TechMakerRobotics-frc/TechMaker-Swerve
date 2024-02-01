@@ -61,8 +61,11 @@ public static final double WHEEL_LOCK_TIME = 10; // Segundos
     }
 
     public static class ElevadorConstants {
-        public static final int kElevadorMotor = 0;
-        public static final double kPower = 0;    
+        public static final int kElevadorRightMotor = 0;
+        public static final int kElevadorLeftMotor = 0;
+        public static final double kPower = 0;   
+        public static final double kGearRatio = 0;
+        public static final double kRampRate = 0; 
         public static final double kp = 0;
         public static final double ki = 0.0;
         public static final double kd = 0.01;
