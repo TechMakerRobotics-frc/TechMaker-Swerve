@@ -34,6 +34,12 @@ public class Intake extends SubsystemBase {
     return instance;
 }
 
+
+public void setMotorPower(double forward) {
+  SmartDashboard.putNumber("Shooter Potencia (%)", forward * 100.0);
+    motor.set(forward);
+}
+
   public void SetIntake(double power) {
     SmartDashboard.putNumber("Intake Potencia (%)", power * 100.0);
       motor.set(power);

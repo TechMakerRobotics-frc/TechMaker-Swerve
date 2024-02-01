@@ -52,14 +52,14 @@ public static final double WHEEL_LOCK_TIME = 10; // Segundos
         public static final int DRIVER_CONTROLLER_PORT = 0;
     }
     public static class IntakeConstants {
-        public static final int kIntakeMotor = 5;
-        public static final int kReturnTicks = 7;
-        public static final double kRampRate = 0.3;
-        public static final double kPower = 0.2;
-        public static final double kPowerWait = 0.06;
+        public static final int kIntakeMotor = 14;
+        public static final int kReturnTicks = 0;
+        public static final double kRampRate = 0;
+        public static final double kPower = 0.5;
+        public static final double kPowerWait = 0;
 
     }
-
+/* 
     public static class ElevadorConstants {
         public static final int kElevadorRightMotor = 0;
         public static final int kElevadorLeftMotor = 0;
@@ -71,12 +71,23 @@ public static final double WHEEL_LOCK_TIME = 10; // Segundos
         public static final double kd = 0.01;
 
 
-        }
+        }*/
 
-
+        public static class ShooterConstants {
+            public static final int kShooterDownMotor = 13;
+            public static final int kShooterUpMotor = 15;
+            public static final int kReturnTicks = 0;
+            public static final int kMaxForwardTicks = 0;
+            public static final double kRampRate = 0;
+            public static final double kPower = 0.5;
+            public static final double kPowerWait = 0;
+        
+          } 
+          
+          /*
     public static class PDPConstants {
         public static final int kID = 1;
         public static final ModuleType kModule = ModuleType.kCTRE;
         public static final double kMinimumVoltage = 10.5;
-      }
+      } */
 }

@@ -11,18 +11,24 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Auto.Autonomo;
 import frc.robot.commands.swervedrive.MoveAuto.AutonomoControle;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
-import frc.robot.subsystems.PDP;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+//import frc.robot.subsystems.PDP;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class RobotContainer
 {
    private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
 
-   private final PDP pdp = PDP.getInstance();
+   private final Shooter shooter  = Shooter.getInstance();
+   private final Intake intake  = Intake.getInstance();
+   //private final PDP pdp = PDP.getInstance();
    
    // Subtitua por CommandPS4Controller ou CommandJoystick se necessário.
    CommandXboxController driverXbox = new CommandXboxController(0);
@@ -42,7 +48,7 @@ TeleopDrive closedFieldRel = new TeleopDrive(
 
     // The container for the robot. Contains subsystems, OI devices, and commands.
     
-    Trigger tLowBatt = new Trigger(pdp::getLowVoltage);
+    //Trigger tLowBatt = new Trigger(pdp::getLowVoltage);
 
 
     public RobotContainer(){
@@ -69,7 +75,16 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
         driverXbox.b().onTrue(new AutonomoControle(drivebase));
         
+        driverXbox.x().onTrue(new InstantCommand(()->shooter.setMotorPower(-ShooterConstants.kPower),shooter))
+        .onFalse(new InstantCommand(()->shooter.setMotorPower(0),shooter));
+
+        driverXbox.y().onTrue(new InstantCommand(()->intake.setMotorPower(-IntakeConstants.kPower),intake))
+        .onFalse(new InstantCommand(()->intake.setMotorPower(0),intake));
+        
         drivebase.setDefaultCommand(closedFieldRel);
+
+
+
     }
 
   /**

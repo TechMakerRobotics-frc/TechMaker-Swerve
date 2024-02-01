@@ -14,25 +14,25 @@ public class Shooter extends SubsystemBase {
   boolean extended = false;
 
   //Dois motores, um de  cada lado 
-  CANSparkMax  motorLeft = new CANSparkMax(ShooterConstants.kShooterLeftMotor,MotorType.kBrushless);
-  CANSparkMax  motorRight = new CANSparkMax (ShooterConstants.kShooterRighrMotor,MotorType.kBrushless);
+  CANSparkMax  motorDown = new CANSparkMax(ShooterConstants.kShooterDownMotor,MotorType.kBrushless);
+  CANSparkMax  motorUp = new CANSparkMax (ShooterConstants.kShooterUpMotor,MotorType.kBrushless);
   
   public Shooter() {
     
 //Limpo qualquer configuração  inicial dos modulos
-    motorLeft.restoreFactoryDefaults();
-    motorRight.restoreFactoryDefaults();
+    motorDown.restoreFactoryDefaults();
+    motorUp.restoreFactoryDefaults();
 
 //Configuro para  que o  motor se mantenha estatico quando em 0
-    motorLeft.setIdleMode(IdleMode.kCoast);
-    motorRight.setIdleMode(IdleMode.kCoast);
+    motorDown.setIdleMode(IdleMode.kCoast);
+    motorUp.setIdleMode(IdleMode.kCoast);
     
 //Configuro a rampa de aceleração para evitar picos de corrente
-    motorLeft.setOpenLoopRampRate(ShooterConstants.kRampRate);
-    motorRight.setOpenLoopRampRate(ShooterConstants.kRampRate);
+    motorDown.setOpenLoopRampRate(ShooterConstants.kRampRate);
+    motorUp.setOpenLoopRampRate(ShooterConstants.kRampRate);
 
-//Inverto o motor da esquerda para que girem juntos
-    motorLeft.setInverted(true);
+//Inverto o motor de baixo para que girem juntos
+    motorDown.setInverted(false);
     
   }
   public static Shooter getInstance() {
@@ -43,8 +43,8 @@ public class Shooter extends SubsystemBase {
 }
   public void setMotorPower(double forward) {
     SmartDashboard.putNumber("Shooter Potencia (%)", forward * 100.0);
-      motorRight.set(forward);
-      motorLeft.set(forward);
+      motorUp.set(forward);
+      motorDown.set(forward);
     
   }
 }
