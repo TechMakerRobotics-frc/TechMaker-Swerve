@@ -91,4 +91,5 @@ public static final double WHEEL_LOCK_TIME = 10; // Segundos
         public static final ModuleType kModule = ModuleType.kCTRE;
         public static final double kMinimumVoltage = 10.5;
       } 
+      
 }

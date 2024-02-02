@@ -28,7 +28,7 @@ public class RobotContainer
 
    private final Shooter shooter  = Shooter.getInstance();
    private final Intake intake  = Intake.getInstance();
-   //private final PDP pdp = PDP.getInstance();
+   private final PDP pdp = PDP.getInstance(); 
    
    // Subtitua por CommandPS4Controller ou CommandJoystick se necessário.
    CommandXboxController driverXbox = new CommandXboxController(0);
