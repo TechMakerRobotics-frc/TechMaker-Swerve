@@ -32,7 +32,8 @@ public class Shooter extends SubsystemBase {
     motorUp.setOpenLoopRampRate(ShooterConstants.kRampRate);
 
 //Inverto o motor de baixo para que girem juntos
-    motorDown.setInverted(false);
+    motorDown.setInverted(true);
+    motorUp.setInverted(true);
     
   }
   public static Shooter getInstance() {

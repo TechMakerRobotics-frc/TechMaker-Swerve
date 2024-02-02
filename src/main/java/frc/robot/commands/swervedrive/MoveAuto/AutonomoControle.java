@@ -13,7 +13,7 @@ public class AutonomoControle extends SequentialCommandGroup {
   Command defaultDriveCommand;
   public AutonomoControle (SwerveSubsystem drivebase){
   {
-    drivebase.removeDefaultCommand();
+    drivebase.removeDefaultCommand(); // Provavelmente isso está atrapalhando.
       addCommands(
 
   new AutoQuadrado(drivebase),
@@ -21,7 +21,9 @@ public class AutonomoControle extends SequentialCommandGroup {
   
   // para andar 2metros x = 2.1
   // para andar 2metros y = 2.2
-                                        
+
+
+  //drivebase.setDefaultCommand();  Talvez colocar isso.
     }
   }
 }

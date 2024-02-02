@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
@@ -20,10 +21,12 @@ public class Intake extends SubsystemBase {
 
     //Configuro para  que o  motor se mantenha estatico quando em 0
     motor.setIdleMode(IdleMode.kCoast);
+    
     //Configuro a rampa de aceleração para evitar picos de corrente elétrica
     motor.setOpenLoopRampRate(IntakeConstants.kRampRate);
 
-    motor.setInverted(false);
+    //Inverto o motor para ele girar de forma correta.
+    motor.setInverted(true);
     
     
   }
@@ -36,7 +39,7 @@ public class Intake extends SubsystemBase {
 
 
 public void setMotorPower(double forward) {
-  SmartDashboard.putNumber("Shooter Potencia (%)", forward * 100.0);
+  SmartDashboard.putNumber("Intake Potencia (%)", forward * 100.0);
     motor.set(forward);
 }
 

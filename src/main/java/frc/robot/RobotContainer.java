@@ -15,11 +15,11 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Auto.Autonomo;
-import frc.robot.commands.swervedrive.MoveAuto.AutonomoControle;
+//import frc.robot.commands.swervedrive.MoveAuto.AutonomoControle;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-//import frc.robot.subsystems.PDP;
+import frc.robot.subsystems.PDP;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class RobotContainer
@@ -40,7 +40,7 @@ TeleopDrive closedFieldRel = new TeleopDrive(
                                   OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
                                   OperatorConstants.LEFT_X_DEADBAND),
-        () -> (driverXbox.getRawAxis(2)-driverXbox.getRawAxis(3)), () -> true);
+        () -> (driverXbox.getRawAxis(3)-driverXbox.getRawAxis(2)), () -> true);
 
 
         double x = 2.7;
@@ -73,12 +73,18 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         driverXbox.rightBumper().onTrue(new InstantCommand(drivebase::zeroGyro));
         driverXbox.leftBumper().onTrue(new InstantCommand(drivebase::resetOdometry));
         driverXbox.a().onTrue(new InstantCommand(drivebase::lock));
-        driverXbox.b().onTrue(new AutonomoControle(drivebase));
+        //driverXbox.b().onTrue(new AutonomoControle(drivebase));
         
-        driverXbox.x().onTrue(new InstantCommand(()->shooter.setMotorPower(-ShooterConstants.kPower),shooter))
+        driverXbox.x()
+        .onTrue(new InstantCommand(()->shooter.setMotorPower(-ShooterConstants.kPower),shooter))
         .onFalse(new InstantCommand(()->shooter.setMotorPower(0),shooter));
-
-        driverXbox.y().onTrue(new InstantCommand(()->intake.setMotorPower(-IntakeConstants.kPower),intake))
+        
+        driverXbox.y()
+        .onTrue(new InstantCommand(()->intake.setMotorPower(-IntakeConstants.kPower),intake))
+        .onFalse(new InstantCommand(()->intake.setMotorPower(0),intake));
+        
+        driverXbox.b()
+        .onTrue(new InstantCommand(()->intake.setMotorPower(-IntakeConstants.VPower),intake))
         .onFalse(new InstantCommand(()->intake.setMotorPower(0),intake));
         
         drivebase.setDefaultCommand(closedFieldRel);

@@ -55,7 +55,8 @@ public static final double WHEEL_LOCK_TIME = 10; // Segundos
         public static final int kIntakeMotor = 14;
         public static final int kReturnTicks = 0;
         public static final double kRampRate = 0;
-        public static final double kPower = 0.5;
+        public static final double kPower = 1;
+        public static final double VPower = -0.3;
         public static final double kPowerWait = 0;
 
     }
@@ -79,15 +80,15 @@ public static final double WHEEL_LOCK_TIME = 10; // Segundos
             public static final int kReturnTicks = 0;
             public static final int kMaxForwardTicks = 0;
             public static final double kRampRate = 0;
-            public static final double kPower = 0.5;
+            public static final double kPower = 2;
             public static final double kPowerWait = 0;
         
           } 
           
-          /*
+          
     public static class PDPConstants {
-        public static final int kID = 1;
+        public static final int kID = 16;
         public static final ModuleType kModule = ModuleType.kCTRE;
         public static final double kMinimumVoltage = 10.5;
-      } */
+      } 
 }
