@@ -16,36 +16,40 @@ public class Shooter extends SubsystemBase {
   //Dois motores, um de  cada lado 
   CANSparkMax  motorDown = new CANSparkMax(ShooterConstants.kShooterDownMotor,MotorType.kBrushless);
   CANSparkMax  motorUp = new CANSparkMax (ShooterConstants.kShooterUpMotor,MotorType.kBrushless);
-  
+  private double motorPower = 0;
   public Shooter() {
     
-//Limpo qualquer configuração  inicial dos modulos
+    //Limpo qualquer configuração  inicial dos modulos
     motorDown.restoreFactoryDefaults();
     motorUp.restoreFactoryDefaults();
 
-//Configuro para  que o  motor se mantenha estatico quando em 0
-    motorDown.setIdleMode(IdleMode.kCoast);
-    motorUp.setIdleMode(IdleMode.kCoast);
-    
-//Configuro a rampa de aceleração para evitar picos de corrente
-    motorDown.setOpenLoopRampRate(ShooterConstants.kRampRate);
-    motorUp.setOpenLoopRampRate(ShooterConstants.kRampRate);
+    //Configuro para  que o  motor se mantenha estatico quando em 0
+    motorDown.setIdleMode(IdleMode.kBrake);
+    motorUp.setIdleMode(IdleMode.kBrake);
 
-//Inverto o motor de baixo para que girem juntos
-    motorDown.setInverted(true);
-    motorUp.setInverted(true);
+    //Inverto o motor de baixo para que girem juntos
+    motorDown.setInverted(false);
+    motorUp.setInverted(false);
     
   }
   public static Shooter getInstance() {
     if (instance == null) {
-        instance = new Shooter();
+      instance = new Shooter();
     }
     return instance;
-}
+  }
   public void setMotorPower(double forward) {
-    SmartDashboard.putNumber("Shooter Potencia (%)", forward * 100.0);
+
       motorUp.set(forward);
       motorDown.set(forward);
+      motorPower = forward;
     
+  }
+  @Override
+  public void periodic(){
+
+    
+    SmartDashboard.putNumber("Shooter Potencia (%)", motorPower * 100.0);
+
   }
 }

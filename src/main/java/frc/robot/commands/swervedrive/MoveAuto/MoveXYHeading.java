@@ -35,7 +35,6 @@ public class MoveXYHeading extends CommandBase {
   public void initialize() {
 
     swerve.resetOdometry();
-    SmartDashboard.putString("O Johnny é calvo?", "NAO");
     lastTimestamp = Timer.getFPGATimestamp();
     lastErrorH = 0;
   }
@@ -119,7 +118,6 @@ public class MoveXYHeading extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     swerve.lock();
-    SmartDashboard.putString("O Johnny é calvo?", "SIM");
   }
 
   // Retornar finish para terminar.

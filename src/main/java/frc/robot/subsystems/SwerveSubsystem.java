@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -20,7 +21,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
 //swerve drive object
     private final SwerveDrive swerveDrive;
-
+    private static SwerveSubsystem instance;
 //Velocidade maxida do robô em metros por segundo, usado para limitar a aceleração.
    
   public double maximumSpeed = 3.0;
@@ -30,18 +31,22 @@ paths with events.
    */
 
     public SwerveSubsystem(File directory){
-        SwerveDriveTelemetry.verbosity = SwerveDriveTelemetry.TelemetryVerbosity.NONE;
+        SwerveDriveTelemetry.verbosity = SwerveDriveTelemetry.TelemetryVerbosity.MACHINE;
         try {
             swerveDrive = new SwerveParser(directory).createSwerveDrive();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        SmartDashboard.putString("Swerve", "Iniciado");
+        instance = this;
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop){
         swerveDrive.drive(translation, rotation, fieldRelative, isOpenLoop);
     }
-
+    public static SwerveSubsystem getInstance() {
+        return instance;
+    }
     @Override
     public void periodic(){}
 

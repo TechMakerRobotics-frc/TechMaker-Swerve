@@ -48,7 +48,6 @@ para que qualquer coisa na estrutura baseada em comando funcione.*/
     {
         autonomousCommand = robotContainer.getAutonomousCommand();
         
-// Agendando um comando autônomo (teste) (example)
         if (autonomousCommand != null){
             autonomousCommand.schedule();
         }

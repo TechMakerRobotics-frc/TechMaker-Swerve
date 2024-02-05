@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase {
     motor.setOpenLoopRampRate(IntakeConstants.kRampRate);
 
     //Inverto o motor para ele girar de forma correta.
-    motor.setInverted(true);
+    motor.setInverted(false);
     
     
   }
@@ -43,17 +43,7 @@ public void setMotorPower(double forward) {
     motor.set(forward);
 }
 
-  public void SetIntake(double power) {
-    SmartDashboard.putNumber("Intake Potencia (%)", power * 100.0);
-      motor.set(power);
-
-  }
-   
-      public void ResetIntake(double power) {
-        SmartDashboard.putNumber("Intake Potencia (%)", power *0.0);
-      motor.set(power);
-   
-  }
+ 
 
 
 }
